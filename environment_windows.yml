@@ -65,7 +65,11 @@ dependencies:
   
   # GUI packages
   - pyqt
-  - qt-main
+  #- qt-main
+
+  # Qt 6.7 packages
+  - qt6-main=6.7.*
+  - qtconsole
   
   # System utilities
   - openssl
