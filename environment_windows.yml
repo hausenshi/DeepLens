@@ -50,7 +50,7 @@ dependencies:
   - idna
   - libjpeg-turbo
   - libpng
-  - jpeg
+  #- jpeg # conflicts with libjpeg-turbo
   
   # PyTorch with CUDA support (let conda resolve compatible versions)
   - pytorch::pytorch
@@ -64,11 +64,12 @@ dependencies:
   - pytorch-mutex=1.0=cuda
   
   # GUI packages
-  - pyqt
+  #- pyqt
   #- qt-main
 
   # Qt 6.7 packages
-  - qt6-main=6.7.*
+  - qt-main=6.7.*
+  - pyqt=6.7.*
   - qtconsole
   
   # System utilities
