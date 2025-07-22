@@ -5,6 +5,7 @@ deeplens.egg-info/
 0_test.py
 *.png
 *.sh
+datasets/
 results/
 deeplens/do_code/
 !lenses/*.png
