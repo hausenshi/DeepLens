@@ -1,7 +1,7 @@
 """Pixel2D DOE parameterization. Each pixel is an independent parameter."""
 
 import torch
-from .diffractive import DiffractiveSurface
+from deeplens.optics.diffractive_surface.diffractive import DiffractiveSurface
 
 
 class Pixel2D(DiffractiveSurface):
@@ -33,7 +33,7 @@ class Pixel2D(DiffractiveSurface):
         if phase_map_path is None:
             self.phase_map = torch.randn(self.res, device=self.device) * 1e-3
         elif isinstance(phase_map_path, str):
-            self.phase_map = torch.load(phase_map_path, map_location=device)
+            self.phase_map = torch.load(phase_map_path, map_location=device, weights_only=True)
         else:
             raise ValueError(f"Invalid phase_map_path: {phase_map_path}")
 

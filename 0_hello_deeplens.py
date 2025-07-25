@@ -15,17 +15,52 @@ This code and data is released under the Creative Commons Attribution-NonCommerc
 
 from deeplens import GeoLens
 
+def init_constraints(lens: GeoLens):
+    """Initialize constraints for the lens design. Unit [mm]."""
+    lens.is_cellphone = False
+ 
+    # Self intersection constraints
+    lens.dist_min = 0.0
+    lens.dist_max = float("inf")
+    lens.thickness_min = 1.0
+    lens.thickness_max = 100.0
+    lens.flange_min = 0.5
+    lens.flange_max = float("inf")
+ 
+    # Surface curvature constraints
+    lens.sag_max = 30.0
+    lens.grad_max = 5.0
+    lens.grad2_max = 100.0
+    lens.d_to_t_max = 10.0
+    lens.tmax_to_tmin_max = 5.0
+ 
+    # Chief ray angle constraints
+    lens.chief_ray_angle_max = 20.0
 
 def main():
-    lens = GeoLens(filename="./lenses/camera/ef35mm_f2.0.json")
+    lens = GeoLens(filename="./test.json")
+    # lens = GeoLens(filename="./lenses/camera/ef35mm_f2.0.json")
     # lens = GeoLens(filename="./lenses/camera/ef35mm_f2.0.zmx")
     # lens = GeoLens(filename='./lenses/cellphone/cellphone80deg.json')
     # lens = GeoLens(filename='./lenses/zemax_double_gaussian.zmx')
 
+    init_constraints(lens)
+    # Lens optimization
+    lens.optimize(
+        lrs=[1e-4, 1e-4, 1e-3, 1e-4],
+        decay=0.001,
+        iterations=5000,
+        test_per_iter=500,
+        centroid=False,
+        optim_mat=True,
+        # match_mat=False, 
+        shape_control=True,
+        # sample_more_off_axis=True,
+    )
     lens.analysis(render=True)
 
-    lens.write_lens_zmx()
-    lens.write_lens_json()
+    # lens.write_lens_zmx()
+    # lens.write_lens_json()
 
 if __name__ == "__main__":
     main()
